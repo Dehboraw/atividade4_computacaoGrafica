@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minha Cena 3D Customizada - 2 Objetos</title>
+  <style>
+    body { margin: 0; overflow: hidden; background-color: #0b0f19; }
+    canvas { display: block; }
+  </style>
+  <!-- Importando a biblioteca Three.js via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+<script>
+  // 1. CRIANDO A CENA
+  const scene = new THREE.Scene();
+
+  // 2. CONFIGURANDO A CÂMERA (Campo de visão, Proporção, Near, Far)
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+  );
+  camera.position.z = 6; // Posicionada para enquadrar bem ambos os objetos
+
+  // 3. CRIANDO O RENDERIZADOR
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild(renderer.domElement);
+
+  // 4. CRIANDO O OBJETO 1: Torus (Donut) na Esquerda
+  // Parâmetros: raio principal, raio do tubo, segmentos radiais, segmentos tubulares
+  const geometry1 = new THREE.TorusGeometry(1.2, 0.4, 12, 48); 
+  const material1 = new THREE.MeshBasicMaterial({ color: 0xff007f, wireframe: true }); // Rosa Neon
+  const torus = new THREE.Mesh(geometry1, material1);
+  torus.position.x = -2.5; // Posicionado na esquerda
+  scene.add(torus);
+
+  // 5. CRIANDO O OBJETO 2: Cilindro na Direita
+  // Parâmetros: raio topo, raio base, altura, segmentos radiais
+  const geometry2 = new THREE.CylinderGeometry(0.8, 0.8, 2.2, 16); 
+  const material2 = new THREE.MeshBasicMaterial({ color: 0x39ff14, wireframe: true }); // Verde Limão
+  const cylinder = new THREE.Mesh(geometry2, material2);
+  cylinder.position.x = 2.5; // Posicionado na direita
+  scene.add(cylinder);
+
+  // 6. LOOP DE ANIMAÇÃO (Animações diferenciadas e opostas)
+  function animate() {
+    requestAnimationFrame(animate);
+
+    // Objeto 1 (Torus): Rotação padrão nos eixos X e Y
+    torus.rotation.x += 0.015;
+    torus.rotation.y += 0.015;
+
+    // Objeto 2 (Cilindro): Rotação invertida (eixos Y e Z) e velocidade diferente
+    cylinder.rotation.y -= 0.02;
+    cylinder.rotation.z -= 0.01;
+
+    // Renderiza a cena atualizada
+    renderer.render(scene, camera);
+  }
+
+  // Ajusta a tela automaticamente se o navegador mudar de tamanho no laboratório
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  animate(); // Inicia o loop de renderização
+</script>
+
+</body>
+</html>
