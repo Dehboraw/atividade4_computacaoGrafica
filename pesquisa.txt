@@ -1,0 +1,16 @@
+
+1. MeshBasicMaterial vs. MeshStandardMaterial
+
+• MeshBasicMaterial é um material simples que não precisa de luzes na cena para ser visto. Ele renderiza o objeto com uma cor sólida e plana (estilo "desenho animado" ou emissivo), ignorando qualquer iluminação ou sombreamento.
+• MeshStandardMaterial é um material baseado em física (PBR) que requer obrigatoriamente luzes na cena. Se não houver luz, o objeto ficará completamente preto. Ele reage de forma realista à iluminação, computando sombras, rugosidade (roughness) e metalicidade (metalness).
+
+2. O parâmetro wireframe: true
+
+• O que faz: Ele transforma a renderização do objeto em uma estrutura de arame, mostrando apenas as linhas que formam as arestas das faces geométricas (os triângulos/polígonos da malha), em vez de preencher as faces com uma cor sólida.
+• Se alterado para false: O objeto volta a ser renderizado normalmente, exibindo suas superfícies completamente preenchidas e sólidas.
+
+3. O Eixo Z e a Posição da Câmera
+
+• Eixo Z em 3D: Em computação gráfica (especialmente no padrão do Three.js), o eixo Z representa a profundidade. O eixo X corre para a esquerda/direita, o Y para cima/baixo, e o Z aponta "para fora da tela" (em direção ao usuário). Valores positivos de Z aproximam os elementos de você, enquanto valores negativos os afastam para o fundo da cena.
+• Aumentar o camera.position.z: O objeto parecerá menor.
+• Por quê? Ao aumentar o valor de Z da câmera, você está movendo a câmera para trás (afastando-a da origem (0,0,0) onde o objeto geralmente está posicionado). Devido ao efeito de perspectiva, quanto mais distante a câmera está de um objeto, menor ele visualmente parecerá na tela.
